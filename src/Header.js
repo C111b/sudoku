@@ -45,31 +45,27 @@ export default function Header() {
           open={info}
           onClose={handleInfo}
         >
-          <DialogTitle sx={{ textAlign: "center" }}>How To Play</DialogTitle>
+          <DialogTitle sx={{ textAlign: "center" }}>
+            Complete the Sudoku.
+          </DialogTitle>
           <DialogContent>
+            <Divider sx={{ m: 2 }}></Divider>
+
             <DialogContentText
               sx={{
                 color: "text.primary",
-                textAlign: "center",
+                fontSize: ".75rem",
+                // ml: 5
               }}
             >
-              Complete the Sudoku.
-              <Divider sx={{ m: 2 }}></Divider>
+              Fill all segments with numbers 1-9.
+              <br /> <br />
+              Segments consist of: <br />
+              - Rows <br />
+              - Columns <br />
+              - 3x3 Blocks <br /> <br />
+              *No duplicate number should exist in a segment.
             </DialogContentText>
-            <DialogContentText
-                    sx={{
-                      color: "text.primary",
-                      fontSize: ".75rem",
-                      // ml: 5
-                    }}
-                  >Complete segments by filling in numbers from 1-9
-                  <br /> <br />
-                  Segments consist of: <br />
-                  - Rows <br />
-                  - Columns <br />
-                  - 3x3 Blocks <br /> <br />
-                  *No duplicate number should exist in a segment.
-                  </DialogContentText>
           </DialogContent>
         </Dialog>
         <IconButton
