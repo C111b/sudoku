@@ -1,15 +1,13 @@
 // import { useState } from "react";
 
 import Gameboard from './Gameboard.js';
+import Header from './Header.js';
 
 function App() {
 
-  // const [count, setCount] = useState(0);
-  // const [boxes, setBoxes] = useState('');
-  
-
   return (
     <>
+      <Header />
       <Gameboard />
     </>
   );

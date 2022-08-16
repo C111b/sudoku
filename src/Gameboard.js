@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { makepuzzle, solvepuzzle } from "sudoku";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import "./App.css";
+import { Button} from "@mui/material";
 
 //Helper functions
 //produces an nxn array of items --- NVM DONT NEED
@@ -53,7 +54,7 @@ const isComplete = (list) => {
 //check exclusivity by checking if repeat numbers in rows,cols, and boxes
 //function checks if dupe in list
 //error solved: will indicate that there is no dupe after incorrectly changing a number in a completed and valid sudoku
-         //occurance is only on the first instance ......set was a mix of string (user inputs) and numbers (starting list & hints)
+//occurance is only on the first instance ......set was a mix of string (user inputs) and numbers (starting list & hints)
 const hasDupe = (list) => {
   let temp = new Set(list);
   return temp.size < 9 || temp.has("") ? true : false;
@@ -65,7 +66,8 @@ const checkRows = (list) => {
     if (hasDupe(list[i])) {
       return false;
     }
-  } return true;
+  }
+  return true;
 };
 
 //checks columns are all 1 to 9 exclusively
@@ -129,9 +131,8 @@ const indexOfEmpty = (list) => {
 
 //// count number of tries after submission
 //5./ Prettier
-//6./ make hints and starting boxes a different colour, OR bolded numbers
+//6. DONE/ make hints and starting boxes a different colour, OR bolded numbers
 //7./ make arrow keys move between inputs
-
 
 //for use with makepuzzle(), where sudokus go from 0-8
 // we want sudokus to be from 1-9
@@ -162,7 +163,7 @@ const Gameboard = () => {
 
   const updateList = (i, j, num) => {
     let tempList = list;
-    tempList[i][j] = num; 
+    tempList[i][j] = num;
     setList([...tempList]);
   };
 
@@ -181,7 +182,7 @@ const Gameboard = () => {
 
   const buttonSubmit = (list) => {
     if (isComplete(list) && isValid(list)) {
-      return setDone(true); 
+      return setDone(true);
     }
     alert("Try Again!");
     setCount(count + 1);
@@ -196,10 +197,10 @@ const Gameboard = () => {
   const testingSet = (list) => {
     let test = new Set(list);
     return test;
-  }
-  useEffect(()=> {
-   console.log(testingSet(list[8])); 
-  })
+  };
+  useEffect(() => {
+    console.log(testingSet(list[8]));
+  });
   //effect for new puzzle button
   useEffect(() => {
     setList(toTwoDim(plusOne(puzzle)));
@@ -209,47 +210,84 @@ const Gameboard = () => {
 
   return (
     <>
-      <button onClick={() => setPuzzle(makepuzzle())}>new puzzle</button>
-      <Box 
-        className = "box"
-        sx={{width:298,
-        height: 296,}}
-        >
-        {list.map((row, i) => (
-          <div key={i} className="row">
-            {row.map((item, j) => (
-              <input
-                className = {hints[i][j] !== "" ? "perm" : "normal"}
-                id = "cell"
-                key={j}
-                type="text"
-                size="1"
-                maxLength="1"
-                value={item}
-                onChange={(e) => {
-                  if (hints[i][j] !== solution[i][j]) {
-                    let num = e.target.value;
-                    return numCheck(parseInt(num)) ? updateList(i, j, parseInt(num))
-                      : num === "" ? updateList(i, j, num)
-                      : null;
-                  }
-                }}
-              />
-            ))}
-          </div>
-        ))}
-      </Box>
-      <button onClick={() => buttonSubmit(list)}>Submit</button>
-      {done ? <div>congrats {console.log(done)}</div> : null}
-      <button onClick={() => setList(toTwoDim(plusOne(solvepuzzle(puzzle))))}>
-        solve
-      </button>
-      <button
-        onClick={() => (!isComplete(list) ? hintReveal(list, solution) : null)}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: "5%",
+          // height: "50%"
+        }}
       >
-        hint
-      </button>
-      {count >= 1 && <div>You've made {count} Attempt{count > 1 ? "s." : "."}</div>}
+        <Box sx={{
+          display: "flex", 
+          justifyContent: "space-between",
+          width: "18.5rem",
+          mb: ".5rem"
+          }}>
+          <Button onClick={() => buttonSubmit(list)}>Submit</Button>
+          {done ? <div>congrats {console.log(done)}</div> : null}
+          <Button
+            onClick={() => setList(toTwoDim(plusOne(solvepuzzle(puzzle))))}
+          >
+            solve
+          </Button>
+          <Button
+            onClick={() =>
+              !isComplete(list) ? hintReveal(list, solution) : null
+            }
+          >
+            hint
+          </Button>
+          {count >= 1 && (
+            <div>
+              You've made {count} Attempt{count > 1 ? "s." : "."}
+            </div>
+          )}
+          <Button onClick={() => setPuzzle(makepuzzle())}>new puzzle</Button>
+        </Box>
+        <Box
+          // className = "box"
+          sx={{
+            display: "flex",
+            // justifyContent: "center",
+
+            flexWrap: "wrap",
+            // justifyContent: "center",
+            // alignItems: "center",
+            width: "18.5rem",
+            height: "18.5rem",
+            // height: 296,
+          }}
+        >
+          {list.map((row, i) => (
+            <div key={i} className="row">
+              {row.map((item, j) => (
+                <input
+                  className={hints[i][j] !== "" ? "perm" : "normal"}
+                  id="cell"
+                  key={j}
+                  type="text"
+                  size="1"
+                  maxLength="1"
+                  value={item}
+                  onChange={(e) => {
+                    if (hints[i][j] !== solution[i][j]) {
+                      let num = e.target.value;
+                      return numCheck(parseInt(num))
+                        ? updateList(i, j, parseInt(num))
+                        : num === ""
+                        ? updateList(i, j, num)
+                        : null;
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          ))}
+        </Box>
+      </Box>
     </>
   );
 };
