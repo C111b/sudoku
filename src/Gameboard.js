@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { makepuzzle, solvepuzzle } from "sudoku";
 import Box from "@mui/material/Box";
 import "./App.css";
-import { Button, TextField} from "@mui/material";
+import { Button, Dialog, TextField} from "@mui/material";
 
 //Helper functions
 //produces an nxn array of items --- NVM DONT NEED
@@ -159,6 +159,10 @@ const Gameboard = () => {
   const [list, setList] = useState(toTwoDim(plusOne(puzzle)));
   const [done, setDone] = useState(false);
   const [count, setCount] = useState(0);
+
+  //finishing message
+  const [message, setMessage] = useState(false);
+
   let solution = toTwoDim(plusOne(solvepuzzle(puzzle)));
 
   const updateList = (i, j, num) => {
@@ -182,25 +186,20 @@ const Gameboard = () => {
 
   const buttonSubmit = (list) => {
     if (isComplete(list) && isValid(list)) {
-      return setDone(true);
+      return [setDone(true), setMessage(true)];
     }
-    alert("Try Again!");
+    setMessage(true);
     setCount(count + 1);
   };
 
-  //testing
+
   //effect for submit button
   useEffect(() => {
     setDone(false); //needs to be done
   }, [list, count]);
 
-  const testingSet = (list) => {
-    let test = new Set(list);
-    return test;
-  };
-  useEffect(() => {
-    console.log(testingSet(list[8]));
-  });
+
+
   //effect for new puzzle button
   useEffect(() => {
     setList(toTwoDim(plusOne(puzzle)));
@@ -208,8 +207,12 @@ const Gameboard = () => {
     setCount(0);
   }, [puzzle]);
 
+  const handleMessageClose = () => {
+    setMessage(false);
+  }
+
   return (
-    <>
+    <main>
       <Box
         sx={{
           display: "flex",
@@ -227,7 +230,11 @@ const Gameboard = () => {
           mb: ".5rem"
           }}>
           <Button onClick={() => buttonSubmit(list)}>Submit</Button>
-          {done ? <div>congrats {console.log(done)}</div> : null}
+          <Dialog open={message}
+          onClose={handleMessageClose}
+          >
+            {done ? "You have completed the Sudoku. Congratulations!" : "Try Again."}
+          </Dialog>
           <Button
             onClick={() => setList(toTwoDim(plusOne(solvepuzzle(puzzle))))}
           >
@@ -240,11 +247,6 @@ const Gameboard = () => {
           >
             hint
           </Button>
-          {count >= 1 && (
-            <div>
-              You've made {count} Attempt{count > 1 ? "s." : "."}
-            </div>
-          )}
           <Button onClick={() => setPuzzle(makepuzzle())}>new puzzle</Button>
         </Box>
         <Box
@@ -287,8 +289,13 @@ const Gameboard = () => {
             </div>
           ))}
         </Box>
+        {count >= 1 && (
+            <Box sx={{mt: ".5rem"}}>
+              You've made {count} Attempt{count > 1 ? "s." : "."}
+            </Box>
+          )}
       </Box>
-    </>
+    </main>
   );
 };
 
