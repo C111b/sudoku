@@ -22,6 +22,7 @@ export default function ColorModeContextProvider({children}) {
         createTheme({
             palette: {
                 mode,
+                
             },
         }),
         [mode],
