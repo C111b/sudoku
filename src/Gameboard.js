@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { makepuzzle, solvepuzzle } from "sudoku";
 import Box from "@mui/material/Box";
 import "./App.css";
-import { Button} from "@mui/material";
+import { Button, TextField} from "@mui/material";
 
 //Helper functions
 //produces an nxn array of items --- NVM DONT NEED
@@ -264,7 +264,7 @@ const Gameboard = () => {
           {list.map((row, i) => (
             <div key={i} className="row">
               {row.map((item, j) => (
-                <input
+                <TextField
                   className={hints[i][j] !== "" ? "perm" : "normal"}
                   id="cell"
                   key={j}
