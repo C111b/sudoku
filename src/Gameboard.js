@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { makepuzzle, solvepuzzle } from "sudoku";
 import Box from "@mui/material/Box";
 import "./App.css";
-import { Button, Dialog, TextField} from "@mui/material";
+import { Button, Dialog, DialogContentText, TextField} from "@mui/material";
 
 //Helper functions
 //produces an nxn array of items --- NVM DONT NEED
@@ -230,10 +230,17 @@ const Gameboard = () => {
           mb: ".5rem"
           }}>
           <Button onClick={() => buttonSubmit(list)}>Submit</Button>
-          <Dialog open={message}
+          <Dialog 
+          open={message}
           onClose={handleMessageClose}
+          fullWidth
+          maxWidth="sm"
           >
-            {done ? "You have completed the Sudoku. Congratulations!" : "Try Again."}
+            {done ? 
+            <DialogContentText sx={{display: "flex", justifyContent: "center", textAlign:"center"}}>Congratulations! <br /> You have completed the Sudoku.</DialogContentText>
+            : 
+            <DialogContentText sx={{display: "flex", justifyContent: "center", textAlign:"center", pt: ".5rem", pb: ".5rem"}}>Try Again!</DialogContentText>
+            }
           </Dialog>
           <Button
             onClick={() => setList(toTwoDim(plusOne(solvepuzzle(puzzle))))}

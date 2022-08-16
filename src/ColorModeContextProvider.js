@@ -15,7 +15,7 @@ export const ColorModeContext = React.createContext({ toggleColorMode: () => {}}
 // );
 
 export default function ColorModeContextProvider({children}) {
-    const [mode, setMode] = React.useState('dark');
+    const [mode, setMode] = React.useState('light');
     
     const theme = React.useMemo(
         () => 
@@ -24,7 +24,7 @@ export default function ColorModeContextProvider({children}) {
                 mode,
                 
             },
-            
+
         }),
         [mode],
     );
