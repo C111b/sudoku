@@ -253,7 +253,7 @@ const Gameboard = () => {
           // className = "box"
           sx={{
             display: "flex",
-            // justifyContent: "center",
+            justifyContent: "center",
 
             flexWrap: "wrap",
             // justifyContent: "center",
@@ -267,6 +267,11 @@ const Gameboard = () => {
             <div key={i} className="row">
               {row.map((item, j) => (
                 <TextField
+                  // sx={{sx={{
+                  //   '.MuiBaseInput-root:last-child': {
+                  //     bgcolor: 'pink',
+                  //   },
+                  // }}}}
                   className={hints[i][j] !== "" ? "perm" : "normal"}
                   id="cell"
                   key={j}

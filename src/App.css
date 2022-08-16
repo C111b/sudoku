@@ -1,11 +1,11 @@
 /* TODOS
-- get a theme
+-DONE get a theme
 -DONE centre content
 -DONE fix up buttons
-- fix up messages ---> on submit with win return a dialog
+-DONE fix up messages ---> on submit with win return a dialog
 -DONE stylize orientations
 -DONE title -> view notepad
-- dark mode/light mode */
+-DONE dark mode/light mode */
 
 
 :root {
@@ -17,9 +17,14 @@ input:hover {
 }
 
 .perm {
-    font-weight: bold;
+    /* font-weight: bold !important; */
     caret-color: transparent;
 }
+
+.perm .MuiOutlinedInput-root {
+    font-weight: bold;
+}
+
 
 .row {
     display: grid;
@@ -57,20 +62,21 @@ input:hover {
 #cell {
     box-sizing: border-box;
     text-align: center;
-    border-radius: .1rem;
-    font-size: 1rem;
-    outline:none;
+    /* border-radius: .1rem; */
+    /* font-size: 1rem;
+    outline:none; */
     /* border: solid; */
+    /* font-weight: bold; */
 
     width: 2rem;
     height: 2rem;
 }
 
 /* spaces out every third cell, forming a column of space*/
-#cell:nth-child(3n) {
+.MuiFormControl-root:nth-child(3n) {
     margin-right: .25rem;
 }
-#cell:nth-child(9) {
+.MuiFormControl-root:nth-child(9) {
     margin-right: 0;
 }
 
