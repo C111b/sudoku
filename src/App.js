@@ -1,19 +1,20 @@
-// import { useState } from "react";
+import * as React from "react";
+import { HashRouter } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
-
 import Gameboard from "./Gameboard.js";
 import Header from "./Header.js";
-
 import ColorModeContextProvider from "./ColorModeContextProvider.js";
 
 function App() {
   return (
     <>
-      <ColorModeContextProvider>
-        <CssBaseline />
-        <Header />
-        <Gameboard />
-      </ColorModeContextProvider>
+      <HashRouter basename={process.env.PUBLIC_URL}>
+        <ColorModeContextProvider>
+          <CssBaseline />
+          <Header />
+          <Gameboard />
+        </ColorModeContextProvider>
+      </HashRouter>
     </>
   );
 }
