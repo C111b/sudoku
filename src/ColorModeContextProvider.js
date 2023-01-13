@@ -35,7 +35,7 @@ export default function ColorModeContextProvider({children}) {
                 setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
             }
         }),
-        [mode],
+        [],
     );
 
     return (
